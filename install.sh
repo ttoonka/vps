@@ -117,16 +117,16 @@ function install_packages() {
     add-apt-repository -yu ppa:bitcoin/bitcoin  &>> ${SCRIPT_LOGFILE}
     apt-get -qq -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true update  &>> ${SCRIPT_LOGFILE}
     apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install build-essential \
-    libcurl4-gnutls-dev protobuf-compiler libboost-all-dev autotools-dev automake \
+    libcurl4-gnutls-dev protobuf-compiler libboost-all-dev autotools-dev automake htop \
     libboost-all-dev libssl-dev make autoconf libtool git apt-utils g++ \
     libprotobuf-dev pkg-config libudev-dev libqrencode-dev bsdmainutils \
     pkg-config libgmp3-dev libevent-dev jp2a pv virtualenv libdb4.8-dev libdb4.8++-dev  &>> ${SCRIPT_LOGFILE}
-    
+
     # only for 18.04 // openssl
     if [[ "${VERSION_ID}" == "18.04" ]] ; then
        apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install libssl1.0-dev
-    fi    
-    
+    fi
+
 }
 
 #
@@ -202,7 +202,7 @@ function create_sentinel_setup() {
 		git pull                      &>> ${SCRIPT_LOGFILE}
 		rm -f rm sentinel.conf        &>> ${SCRIPT_LOGFILE}
 	fi
-	
+
 	# create a globally accessible venv and install sentinel requirements
 	virtualenv --system-site-packages ${SENTINEL_ENV}      &>> ${SCRIPT_LOGFILE}
 	${SENTINEL_ENV}/bin/pip install -r requirements.txt    &>> ${SCRIPT_LOGFILE}
@@ -210,7 +210,7 @@ function create_sentinel_setup() {
     # create one sentinel config file per masternode
 	for NUM in $(seq 1 ${count}); do
 	    if [ ! -f "${SENTINEL_BASE}/${CODENAME}${NUM}_sentinel.conf" ]; then
-	         echo "* Creating sentinel configuration for ${CODENAME} masternode number ${NUM}" &>> ${SCRIPT_LOGFILE}    
+	         echo "* Creating sentinel configuration for ${CODENAME} masternode number ${NUM}" &>> ${SCRIPT_LOGFILE}
 		     echo "dash_conf=${MNODE_CONF_BASE}/${CODENAME}_n${NUM}.conf"            > ${SENTINEL_BASE}/${CODENAME}${NUM}_sentinel.conf
              echo "network=mainnet"                                                  >> ${SENTINEL_BASE}/${CODENAME}${NUM}_sentinel.conf
              echo "db_name=${SENTINEL_BASE}/database/${CODENAME}_${NUM}_sentinel.db" >> ${SENTINEL_BASE}/${CODENAME}${NUM}_sentinel.conf
@@ -862,7 +862,7 @@ main() {
         echo "MNODE_USER:           ${MNODE_USER}"
         echo "MNODE_HELPER:         ${MNODE_HELPER}"
         echo "MNODE_SWAPSIZE:       ${MNODE_SWAPSIZE}"
-        echo "NETWORK_BASE_TAG:     ${NETWORK_BASE_TAG}"        
+        echo "NETWORK_BASE_TAG:     ${NETWORK_BASE_TAG}"
         echo "CODE_DIR:             ${CODE_DIR}"
         echo "SCVERSION:            ${SCVERSION}"
         echo "RELEASE:              ${release}"
