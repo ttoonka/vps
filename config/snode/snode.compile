@@ -1,5 +1,5 @@
 #!/bin/bash
-chmod u+x ./autogen.sh && ./autogen.sh
-./configure --without-gui --without-miniupnpc
+./autogen.sh
+./configure
 make
 make install
