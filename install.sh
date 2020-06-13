@@ -119,7 +119,7 @@ function install_packages() {
     apt-get -qqy -o=Dpkg::Use-Pty=0 -o=Acquire::ForceIPv4=true install build-essential \
     libcurl4-gnutls-dev protobuf-compiler libboost-all-dev autotools-dev automake htop \
     libboost-all-dev libssl-dev make autoconf libtool git apt-utils g++ \
-    libprotobuf-dev pkg-config libudev-dev libqrencode-dev bsdmainutils \
+    libprotobuf-dev pkg-config libudev-dev libqrencode-dev bsdmainutils software-properties-common \
     pkg-config libgmp3-dev libevent-dev jp2a pv virtualenv libdb4.8-dev libdb4.8++-dev  &>> ${SCRIPT_LOGFILE}
 
     # only for 18.04 // openssl
